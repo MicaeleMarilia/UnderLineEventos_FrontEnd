@@ -1,0 +1,30 @@
+.tela {
+    display: flex;
+    margin-top: 90px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 900px;
+    justify-content: center;
+}
+
+.form-group .ng-invalid.ng-touched  {
+    border-left: 5px solid red;
+}
+.form-group .ng-valid{
+    border-left: 5px solid green;
+}
+
+.form-group .ng-untouched ~ .alert.alert-danger{
+    display: none !important;
+}
+
+.SemErro {
+    display: none !important;
+}
+div .form-group {
+    width: 300px;
+}
+
+#horas{
+    color: red;
+}

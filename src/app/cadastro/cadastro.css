@@ -1,0 +1,30 @@
+a:hover, a:visited, a:focus, a:active { 
+  text-decoration: none; 
+  color: inherit; 
+} 
+
+.cadastro {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 120px;
+    margin-right: 5px;
+}
+
+.cadastro button {
+    border: none;
+    padding: 16px;
+    color: white;
+    margin-right: 30px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: 400ms;
+    background-color: black;
+}
+
+.cadastro button:hover{
+  background: white;
+  color: rgb(7, 0, 107);
+  box-shadow: inset 0 0 0 6px rgb(7, 0, 107);
+}

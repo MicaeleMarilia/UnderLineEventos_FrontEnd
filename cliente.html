@@ -1,0 +1,142 @@
+<div class="formulario">
+    <form [formGroup]="formCliente" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input #class type="text" class="form-control" placeholder="Informe seu nome" name="nome" id="nome" required
+                formControlName="nome">
+            <div *ngIf="formCliente.controls['nome'].hasError('required')" class="alert alert-danger">
+                Insira seu nome
+            </div>
+            <div *ngIf="formCliente.controls['nome'].hasError('pattern')" class="alert alert-danger">
+                Apenas letras são permitidas
+            </div>
+            <div *ngIf="formCliente.controls['nome'].hasError('minlength')" class="alert alert-danger">
+                Nome muito curto
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Gênero</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="genero" id="masculino" [value]="1"
+                    formControlName="genero">
+                <label class="form-check-label" for="masculino">Masculino</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="genero" id="feminino" [value]="2"
+                    formControlName="genero">
+                <label class="form-check-label" for="feminino">Feminino</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="genero" id="indefinido" [value]="3"
+                    formControlName="genero">
+                <label class="form-check-label" for="indefinido">Prefiro não informar</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="dataNascimento">Data de nascimento</label>
+            <input type="date" class="form-control" name="dataNascimento" id="dataNascimento"
+                formControlName="dataNascimento" required>
+            <div *ngIf="formCliente.controls['dataNascimento'].hasError('required')" class="alert alert-danger">
+                Informe a data de nascimento
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="cpfCnpj">CPF ou Cnpj</label>
+            <input type="text" class="form-control" placeholder="Informe o seu cpf ou Cnpj" id="cpfCnpj"
+                formControlName="cpfCnpj" required (blur)="validarDados($event)" (keyup)="mascaraCpfCnpj($event)"
+                [mask]="maskCpfCnpj">
+            <div [class]="resultado">
+                Cpf ou Cnpj incorreto
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="uf">Estado</label>
+            <input type="text" class="form-control" placeholder="Informe o estado" name="uf" id="uf" required
+                formControlName="uf" required>
+            <div *ngIf="formCliente.controls['uf'].hasError('required')" class="alert alert-danger">
+                Informe o estado
+            </div>
+            <div *ngIf="formCliente.controls['uf'].hasError('pattern')" class="alert alert-danger">
+                Apenas letras são permitidas
+            </div>
+            <div *ngIf="formCliente.controls['uf'].hasError('minlength')" class="alert alert-danger">
+                Nome muito curto
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="cidade">Cidade</label>
+            <input type="text" class="form-control" placeholder="Cidade" name="cidade" id="cidade" required
+                formControlName="cidade" required>
+            <div *ngIf="formCliente.controls['cidade'].hasError('required')" class="alert alert-danger">
+                Informe a cidade
+            </div>
+            <div *ngIf="formCliente.controls['cidade'].hasError('pattern')" class="alert alert-danger">
+                Apenas letras são permitidas
+            </div>
+            <div *ngIf="formCliente.controls['cidade'].hasError('minlength')" class="alert alert-danger">
+                Nome muito curto
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="endereco">Endereço</label>
+            <input type="text" class="form-control" placeholder="Informe seu endereço" id="endereco"
+                formControlName="endereco" required>
+            <div *ngIf="formCliente.controls['endereco'].hasError('required')" class="alert alert-danger">
+                Informe seu endereço
+            </div>
+            <div *ngIf="formCliente.controls['endereco'].hasError('minlength')" class="alert alert-danger">
+                Endereço muito curto
+            </div>
+        </div>
+
+        <!--<div class="form-group">
+            <label for="tipo">Tipo</label>
+            <select class="form-control" name="tipo" id="tipo" formControlName="tipo">
+                <option value="1">Pessoa física</option>
+                <option value="2">Pessoa jurídica</option>
+            </select>
+        </div>-->
+
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" class="form-control" placeholder="Informe seu e-mail" id="email" formControlName="email"
+                required>
+            <div *ngIf="formCliente.controls['email'].hasError('required')" class="alert alert-danger">
+                Email incorreto
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="contato">Telefone</label>
+            <input type="string" class="form-control" placeholder="Informe um telefone" name="contato" id="contato"
+                required formControlName="contato" required mask="(00) 0.0000-0000">
+            <div *ngIf="formCliente.controls['contato'].hasError('required')" class="alert alert-danger">
+                Informe o telefone no formato (ddd) *.**** ****
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" class="form-control" placeholder="senha" name="senha" id="senha" required
+                formControlName="senha" required>
+            <div *ngIf="formCliente.controls['senha'].hasError('required')" class="alert alert-danger">
+                Informe uma senha com 8 dígitos
+            </div>
+            <div *ngIf="formCliente.controls['senha'].hasError('minlength')" class="alert alert-danger">
+                Informe uma senha com 8 dígitos
+            </div>
+        </div>
+        <div>
+            <input type="submit" class="btn btn-primary mt-4" value="Cadastrar">
+            <a href="#" class="btn btn-secondary mt-4 ml-2">Cancelar</a>
+        </div>
+
+    </form>
+</div>

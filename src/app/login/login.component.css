@@ -1,0 +1,15 @@
+.tela {
+    margin-top: 90px;
+    display: block;
+    height: min-content;
+    flex-direction: row;
+    align-content: center;
+}
+
+.campos{
+    display: block;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+

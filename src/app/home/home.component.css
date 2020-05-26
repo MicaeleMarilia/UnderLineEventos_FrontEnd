@@ -1,0 +1,10 @@
+.logotipo{
+  display: flex;
+  justify-content: center;
+}
+
+.logotipo img{
+  margin-top: 80px;
+  width: 300px;
+  flex: 0 1 100px;
+}

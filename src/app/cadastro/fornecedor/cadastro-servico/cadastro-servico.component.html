@@ -1,0 +1,68 @@
+<div class="tela">
+    <form [formGroup]="formServico" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <label for="nomeServico">Serviço</label>
+            <input type="text" class="form-control" placeholder="Título do serviço" name="nomeServico" id="nomeServico"
+                required formControlName="nomeServico">
+            <div *ngIf="formServico.controls['nomeServico'].hasError('required')" class="alert alert-danger">
+                Insira o nome fantasia
+            </div>
+            <div *ngIf="formServico.controls['nomeServico'].hasError('minlength')" class="alert alert-danger">
+                Nome muito curto
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="opServico">Tipo do serviço</label>
+            <select #opServico name="opServico" id="opServico" required formControlName="opServico">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="capacidade">Capacidade Máxima</label>
+            <input type="text" class="form-control" placeholder="Qual capacidade máxima o serviço suporta?"
+                name="capacidade" id="capacidade" required formControlName="capacidade">
+            <div *ngIf="formServico.controls['capacidade'].hasError('required')" class="alert alert-danger">
+                Insira a capacidade do serviço
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="qtdHrsMin">Quantidade mínima de horas do serviço</label>
+            <input type="text" onfocus="this.type='time'" onblur="this.type='text'" class="form-control"
+                placeholder="Horas:Minutos" name="qtdHrsMin" id="qtdHrsMin" required formControlName="qtdHrsMin">
+            <div *ngIf="formServico.controls['qtdHrsMin'].hasError('required')" class="alert alert-danger">
+                Insira a quantidade mínima de horas
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="qtdHrsMax">Quantidade máxima de horas do serviço</label>
+            <input type="text" onfocus="this.type='time'" onblur="this.type='text'" class="form-control"
+                placeholder="Horas:Minutos" name="qtdHrsMax" id="qtdHrsMax" required formControlName="qtdHrsMax">
+            <div *ngIf="formServico.controls['qtdHrsMax'].hasError('required')" class="alert alert-danger">
+                Insira a quantidade máxima de horas
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="descricao">Descreva o serviço</label>
+            <textarea rows="10" cols="250" maxlength="500" class="form-control"
+                placeholder="Detalhe sobre o funcionamento do serviço" name="descricao" id="descricao" required
+                formControlName="descricao"></textarea>
+            <div *ngIf="formServico.controls['descricao'].hasError('required')" class="alert alert-danger">
+                Insira uma descrição com no mínimo 30 caracteres
+            </div>
+            <div *ngIf="formServico.controls['descricao'].hasError('minlength')" class="alert alert-danger">
+                Nome muito curto
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="valor">Custo do serviço por hora</label>
+            <input type="text" placeholder="Insira o valor" class="form-control" name="valor" id="valor" required
+                formControlName="valor">
+            <div *ngIf="formServico.controls['valor'].hasError('required')" class="alert alert-danger">
+                Insira o valor do serviço por hora
+            </div>
+        </div>
+
+        <input type="submit" class="btn btn-primary mt-4" value="Cadastrar">
+        <a href="#" class="btn btn-secondary mt-4 ml-2">Cancelar</a>
+    </form>
+</div>

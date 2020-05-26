@@ -1,0 +1,151 @@
+<div class="tela">
+    <div class="formulario">
+        <form [formGroup]="formFornecedor" (ngSubmit)="onSubmit()">
+
+            <div class="form-group">
+                <label for="nomeFantasia">Nome Fantasia</label>
+                <input type="text" class="form-control" placeholder="Informe o nome fantasia" name="nomeFantasia"
+                    id="nomeFantasia" required formControlName="nomeFantasia">
+                <div *ngIf="formFornecedor.controls['nomeFantasia'].hasError('required')" class="alert alert-danger">
+                    Insira o nome fantasia
+                </div>
+                <div *ngIf="formFornecedor.controls['nomeFantasia'].hasError('minlength')" class="alert alert-danger">
+                    Nome muito curto
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nomeResponsavel">Nome do Responsavel</label>
+                <input type="text" required="required" class="form-control" placeholder="Informe o nome do responsável"
+                    name="nomeResponsavel" id="nomeResponsavel" formControlName="nomeResponsavel">
+                <div *ngIf="formFornecedor.controls['nomeResponsavel'].hasError('required')" class="alert alert-danger">
+                    Insira o nome do responsável
+                </div>
+                <div *ngIf="formFornecedor.controls['nomeResponsavel'].hasError('pattern')" class="alert alert-danger">
+                    Apenas letras são permitidas
+                </div>
+                <div *ngIf="formFornecedor.controls['nomeResponsavel'].hasError('minlength')"
+                    class="alert alert-danger">
+                    Nome muito curto
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cpfCnpj">CPF ou CNPJ</label>
+                <input type="string" class="form-control" placeholder="Da Empresa ou do Responsável" name="cpfCnpj"
+                    id="cpfCnpj" required formControlName="cpfCnpj" (blur)="validarDados($event)"
+                    (keyup)="mascaraCpfCnpj($event)" [mask]="maskCpfCnpj">
+                <div [class]="resultado">
+                    Cpf ou Cnpj incorreto
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inscricaoEstadual">Inscrição Estadual</label>
+                <input type="string" class="form-control" placeholder="IE" name="inscricaoEstadual"
+                    id="inscricaoEstadual" required formControlName="inscricaoEstadual">
+                <div *ngIf="formFornecedor.controls['inscricaoEstadual'].hasError('pattern')"
+                    class="alert alert-danger">
+                    Apenas números são permitidos
+                </div>
+                <div *ngIf="formFornecedor.controls['inscricaoEstadual'].hasError('minlength')"
+                    class="alert alert-danger">
+                    A inscrição estadual deve ter 9 dígitos
+                </div>
+                <div *ngIf="formFornecedor.controls['inscricaoEstadual'].hasError('maxlength')"
+                    class="alert alert-danger">
+                    A inscrição estadual deve ter 9 dígitos
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="uf">Estado</label>
+                <input type="text" class="form-control" placeholder="Informe o estado" name="uf" id="uf" required
+                    formControlName="uf">
+                <div *ngIf="formFornecedor.controls['uf'].hasError('required')" class="alert alert-danger">
+                    Informe o Estado
+                </div>
+                <div *ngIf="formFornecedor.controls['uf'].hasError('pattern')" class="alert alert-danger">
+                    Apenas letras são permitidas
+                </div>
+                <div *ngIf="formFornecedor.controls['uf'].hasError('minlength')" class="alert alert-danger">
+                    Nome muito curto
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="cidade">Cidade</label>
+                <input type="text" class="form-control" placeholder="Cidade" name="cidade" id="cidade" required
+                    formControlName="cidade">
+                <div *ngIf="formFornecedor.controls['cidade'].hasError('required')" class="alert alert-danger">
+                    Informe a cidade
+                </div>
+                <div *ngIf="formFornecedor.controls['cidade'].hasError('pattern')" class="alert alert-danger">
+                    Apenas letras são permitidas
+                </div>
+                <div *ngIf="formFornecedor.controls['cidade'].hasError('minlength')" class="alert alert-danger">
+                    Nome muito curto
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="bairro">Bairro</label>
+                <input type="text" class="form-control" placeholder="Informe o bairro" name="bairro" id="bairro" required
+                    formControlName="bairro">
+                <div *ngIf="formFornecedor.controls['bairro'].hasError('required')" class="alert alert-danger">
+                    Informe o bairro
+                </div>
+                <div *ngIf="formFornecedor.controls['endereco'].hasError('minlength')" class="alert alert-danger">
+                    Informação muito curta
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="endereco">Endereço</label>
+                <input type="text" class="form-control" placeholder="Informe o endereço" name="endereco" id="endereco"
+                    required formControlName="endereco">
+                <div *ngIf="formFornecedor.controls['endereco'].hasError('required')" class="alert alert-danger">
+                    Informe o endereço
+                </div>
+                <div *ngIf="formFornecedor.controls['endereco'].hasError('minlength')" class="alert alert-danger">
+                    Endereço muito curto
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="contato">Celular</label>
+                <input type="string" class="form-control" placeholder="Informe um telefone" name="contato" id="contato"
+                    required formControlName="contato" (keyup)="mascaraContato($event)" [mask]="maskContato">
+                <div *ngIf="formFornecedor.controls['contato'].hasError('required')" class="alert alert-danger">
+                    Informe o telefone no formato (ddd) *.**** ****
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="contato2">Telefone</label>
+                <input type="string" class="form-control" placeholder="Informe um telefone" name="contato2"
+                    id="contato2" required formControlName="contato2" mask="(00) 0.0000-0000">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" placeholder="Informe um email" name="email" id="email" required
+                    formControlName="email">
+                <div *ngIf="formFornecedor.controls['contato'].hasError('required')" class="alert alert-danger">
+                    Email incorreto
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" class="form-control" placeholder="Senha entre 6 e 12 dígitos" name="senha"
+                    id="senha" required formControlName="senha">
+                <div *ngIf="formFornecedor.controls['senha'].hasError('required')" class="alert alert-danger">
+                    Informe uma senha entre 6 e 12 dígitos
+                </div>
+                <div *ngIf="formFornecedor.controls['senha'].hasError('minlength')" class="alert alert-danger">
+                    Sua senha deve ter entre 6 e 12 dígitos
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary mt-4" value="Cadastrar">
+            <a href="#" class="btn btn-secondary mt-4 ml-2">Cancelar</a>
+        </form>
+    </div>
+</div>
