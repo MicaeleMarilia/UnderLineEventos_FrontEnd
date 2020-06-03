@@ -25,12 +25,24 @@ export class ServicoServices {
  saveServico(Servico: servico): Observable < servico > {
     
     return this.httpClient.post<servico>(this.url, JSON.stringify(Servico), this.httpOptions)
-      .pipe(
-        retry(2),
-        catchError(this.handleError)
-      )
+      // .pipe(
+      //   retry(2),
+      //   catchError(this.handleError)
+      // )
   }
 
+httpOptionsData = {
+    headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' })
+  }
+  saveImg(img: FormData){
+    //var url = 'http://localhost/teste.php'
+    return this.httpClient.post(this.url, img)
+    // .pipe(
+    //   retry(2),
+    //   catchError(this.handleError)
+    // )
+  }
+  
   // Manipulação de erros
   handleError(error: HttpErrorResponse) {
     console.log(error.error.data.msg.msg);

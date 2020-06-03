@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   autenticar(Usuario: Usuario): Observable<any> {
-    console.log(Usuario);
+
     
     return this.httpClient.post<Usuario>(this.url, JSON.stringify(Usuario), this.httpOptions)
       .pipe(

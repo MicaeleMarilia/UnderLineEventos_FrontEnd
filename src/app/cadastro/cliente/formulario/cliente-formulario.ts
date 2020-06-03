@@ -217,7 +217,7 @@ validaCNPJ(cnpj) {
                   alert("Cadastro realizado com sucesso!")
               }
               else if (response.cod == "300") {
-                  //this.resultado = "alert alert-danger"
+                  this.resultado = "alert alert-danger"
                   alert(response.msg)
               }
               else if (response.cod == "400") {
@@ -238,6 +238,7 @@ validaCNPJ(cnpj) {
       this.formCliente.controls.uf.markAsTouched();
       this.formCliente.controls.senha.markAsTouched();
       this.resultado = "alert alert-danger";
+      alert("Preencha os campos corretamente")
     }
   }
 }

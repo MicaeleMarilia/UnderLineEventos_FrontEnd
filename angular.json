@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "underlineEventos"
+    }
+  },
+  "defaultProject": "underlineEventos",
+  "cli": {
+    "analytics": "fe40321b-1c2f-4082-a945-54fe4b007d4a"
+  }
 }

@@ -4,7 +4,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { servico } from '../../../models/servico'
 import { consultaServico } from 'src/app/services/consultaServico';
 import { Router } from '@angular/router';
-import { ServicoServices } from '../../../services/servico.services'
+import { ServicoServices } from '../../../services/servico.services';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { DomSanitizer } from '@angular/platform-browser';
  
 @Component({
   selector: 'app-cadastro-servico',
@@ -14,7 +16,7 @@ import { ServicoServices } from '../../../services/servico.services'
 export class CadastroServicoComponent implements AfterViewInit, OnInit {
   formServico: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,private consultaServico: consultaServico, private router: Router, private Servico: ServicoServices) {
+  constructor(private formBuilder: FormBuilder,private consultaServico: consultaServico, private router: Router, private Servico: ServicoServices, private httpClient: HttpClient, private sanitizer: DomSanitizer) {
    }
 
   objetoRetorno: any;
@@ -53,42 +55,71 @@ export class CadastroServicoComponent implements AfterViewInit, OnInit {
   retornoServico: any;
 
   opServico() {
-  // variável provisória para testar retorno do banco
-  //     var retornoServico = [
-  //   {id: 1,
-  //   nome: "Banda"
-  //   },
-  //   {id: 2,
-  //     nome: "Buffet",
-  //   },
-  //   {id:3,
-  //     nome: "Casa"
-  //   }
-  // ];
-
-    var opcao;
-    opcao = '<option for="opServico" id="' + '00' + '"> ' + 'Selecione' + '</option>'
-            this.teste.nativeElement.innerHTML += opcao;
-
-    this.consultaServico.getServico().subscribe(
-      (response:any)=> {
-          for (var contador = 0; contador < response.length; contador++) {
-            opcao = '<option value=' + response[contador].id + ' for="opServico" id="' + response[contador].id + '"> ' + response[contador].nome + '</option>'
-            this.teste.nativeElement.innerHTML += opcao;
-          } 
-        }
-    );
-  }
+    // variável provisória para testar retorno do banco
+    //     var retornoServico = [
+    //   {id: 1,
+    //   nome: "Banda"
+    //   },
+    //   {id: 2,
+    //     nome: "Buffet",
+    //   },
+    //   {id:3,
+    //     nome: "Casa"
+    //   }
+    // ];
   
-  @ViewChild("opServico") teste: ElementRef;
+      var opcao;
+      opcao = '<option for="opServico" id="' + '00' + '"> ' + 'Selecione' + '</option>'
+              this.teste.nativeElement.innerHTML += opcao;
   
-  ngAfterViewInit() {
-    this.opServico();
-  }
+      this.consultaServico.getServico().subscribe(
+        (response:any)=> {
+            for (var contador = 0; contador < response.length; contador++) {
+              opcao = '<option value=' + response[contador].id + ' for="opServico" id="' + response[contador].id + '"> ' + response[contador].nome + '</option>'
+              this.teste.nativeElement.innerHTML += opcao;
+            } 
+          }
+      );
+    }
     
+    @ViewChild("opServico") teste: ElementRef;
+    
+    ngAfterViewInit() {
+      this.opServico();
+    }
 
-  onSubmit(){
-      console.log(this.formServico.value)
+  
+  imgEvent: Array <File> = null;
+
+  onFile(event){
+    this.imgEvent = event.target.files;
+  }
+
+  imagens;
+
+  @ViewChild("imgCadastrada") imgHTML: ElementRef;
+  
+  submitImg(idForn, idServ) {
+    const img = new FormData();
+    img.append('idForn', idForn);
+    img.append('idServ', idServ)
+        if (this.imgEvent) {
+          for (var i = 0; i < this.imgEvent.length; i++) {
+            img.append(('fotos' + i), this.imgEvent[i]);
+          }
+          this.Servico.saveImg(img).subscribe(
+            (response: any) => {
+              this.imagens = response;
+              for (var a = 0; a < this.imagens.length; a++) {                  
+                var novaImg = '<img src="' + this.imagens[a] + '">';
+                this.imgHTML.nativeElement.innerHTML += novaImg;
+              }
+            }
+          );
+        }
+  }
+
+  onSubmit() {
        if (this.formServico.controls.nomeServico.valid &&
         //this.formServico.controls.tipoServico.valid &&
         this.formServico.controls.capacidade.valid &&
@@ -100,19 +131,20 @@ export class CadastroServicoComponent implements AfterViewInit, OnInit {
             this.Servico.saveServico(this.formServico.value).subscribe(
             (response: any) => {
                 if (response.cod == "200") {
+                  this.submitImg(this.formServico.value.user, response.idServ)
                   this.router.navigate(['/fornecedor'])
                   this.resultado = "SemErro"
                   alert("Cadastro realizado com sucesso!")
+                }
+                else if (response.cod == "300") {
+                    this.resultado = "alert alert-danger"
+                    alert(response.msg)
+                }
+                else if (response.cod == "400") { 
+                  alert("Serviço já cadastrado!")
+                }
               }
-              else if (response.cod == "300") {
-                  //this.resultado = "alert alert-danger"
-                  alert(response.msg)
-              }
-              else if (response.cod == "400") { 
-                alert("Serviço já cadastrado!")
-              }
-            }
-          );
+            );
       }
       else {
         this.formServico.controls.nomeFantasia.markAsTouched();
@@ -126,5 +158,7 @@ export class CadastroServicoComponent implements AfterViewInit, OnInit {
         this.formServico.controls.senha.markAsTouched();
         this.resultado = "alert alert-danger";      
       }
-    }
+    
   }
+
+}

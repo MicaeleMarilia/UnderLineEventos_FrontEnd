@@ -5,6 +5,6 @@ export class servico {
   qtdHrsMin: string;
   qtdHrsMax: string;
   descricao: string;
-  fotos: Array<ImageBitmap>;
+  fotos: Array<File>;
   valor: string;
   }

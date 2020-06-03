@@ -191,14 +191,14 @@ export class FormularioFornecedor implements OnInit {
   maskContato = '(00) 0.0000-0000';
 
   mascaraContato($event) {
-    var tamanho = $event.target.value.length;
-    if (tamanho < 15) {
+    var tamanho = $event.target.value.replace(/[^\d]+/g, '').length;
+    if (tamanho < 11) {
       this.maskContato = '(00) 0000-00000'
-      if (tamanho == 14) {
+      if (tamanho == 10 || tamanho == 14) {
         $event.target.className = $event.target.className.replace(" ng-invalid", " ng-valid");
       }
     }
-    else if (tamanho >= 15){
+    else if (tamanho >= 11){
       this.maskContato = '(00) 0.0000-0000'
     }
   }
@@ -227,6 +227,7 @@ export class FormularioFornecedor implements OnInit {
       this.formFornecedor.controls.email.valid &&
       this.formFornecedor.controls.senha.valid)
     {
+      
           this.clienteService.saveFornecedor(this.formFornecedor.value).subscribe(
             (response: any) => {
               if (response.cod == "200") {
@@ -235,7 +236,7 @@ export class FormularioFornecedor implements OnInit {
                 alert("Cadastro realizado com sucesso!")
             }
             else if (response.cod == "300") {
-                //this.resultado = "alert alert-danger"
+                this.resultado = "alert alert-danger"
                 alert(response.msg)
             }
             else if (response.cod == "400") { 
@@ -255,6 +256,7 @@ export class FormularioFornecedor implements OnInit {
       this.formFornecedor.controls.email.markAsTouched();
       this.formFornecedor.controls.senha.markAsTouched();
       this.resultado = "alert alert-danger";      
+      alert("Preencha os campos corretamente")
     }
   }
 }

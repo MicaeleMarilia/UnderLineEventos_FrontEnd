@@ -12,7 +12,7 @@
                 Nome muito curto
             </div>
         </div>
-        <div class="form-group">
+            <div class="form-group">
             <label for="opServico">Tipo do serviço</label>
             <select #opServico name="opServico" id="opServico" required formControlName="opServico">
             </select>
@@ -61,8 +61,16 @@
                 Insira o valor do serviço por hora
             </div>
         </div>
+        <div class="form-group">
+            <label for="fotos">Foto do serviço</label>
+            <input type="file" class="form-control" (change)="onFile($event)" multiple name="fotos" id="fotos" required
+                formControlName="fotos">
+        </div>
 
         <input type="submit" class="btn btn-primary mt-4" value="Cadastrar">
         <a href="#" class="btn btn-secondary mt-4 ml-2">Cancelar</a>
     </form>
 </div>
+<div #imgCadastrada class="imgCadastrada">
+</div>
+<!--<img src="/Library/WebServer/Documents/Servidor/Lucas/1/202005291705413.jpg"> </div> -->
